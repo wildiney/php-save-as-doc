@@ -1,12 +1,14 @@
 <?php
-  header("Content-type: application/vnd.ms-word");
-  header("Content-Disposition: attachment;Filename=traducao.doc");    
-  echo "<html>";
-  echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">";
-  echo "<body style='font-family:Arial, sans-serif;'>";
-  echo "<h1>" . $_POST['title'] . "</h1>";
-  echo $_POST['intro'];
-  echo $_POST['content'];
-  echo "</body>";
-  echo "</html>";
-?>
+require_once('./classes/SaveAs.class.php');
+
+$url        = $_POST['url'];
+$title      = $_POST['title'];
+$intro      = $_POST['intro'];
+$content    = $_POST['content'];
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $file = new SaveAs($url, $title, $intro, $content);
+    echo $file->Doc();
+} else {
+    echo "Acesso não permitido.";
+}
